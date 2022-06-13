@@ -1,9 +1,15 @@
-class TodosController < ApplicationController
+class API::V1::TodosController < ApplicationController
   before_action :set_todo, only: [:show, :update, :destroy]
 
   # GET /todos
   def index
     @todos = Todo.all
+    limit = params[:limit]
+
+    if limit.present?
+      limit = limit.to_i
+      @todos = @todos.last(limit)
+    end
 
     render json: @todos
   end
@@ -46,6 +52,6 @@ class TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.require(:todo).permit(:title, :completed)
+      params.require(:todo).permit(:title, :id, :completed, :limit)
     end
 end
