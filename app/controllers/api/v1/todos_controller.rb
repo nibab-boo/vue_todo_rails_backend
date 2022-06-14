@@ -1,4 +1,4 @@
-class API::V1::TodosController < ApplicationController
+class Api::V1::TodosController < ApplicationController
   before_action :set_todo, only: [:show, :update, :destroy]
 
   # GET /todos
@@ -47,6 +47,7 @@ class API::V1::TodosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_todo
+      p params
       @todo = Todo.find(params[:id])
     end
 
